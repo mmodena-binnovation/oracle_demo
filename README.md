@@ -1,1 +1,1 @@
-test repo 
+Inizializzazione repository globale 
