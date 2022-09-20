@@ -2128,7 +2128,7 @@ group by scontrino_prog, cod_ean, tipo_riga, cod_pdv, dt_competenza
 -------variabili per creazione ed invio MAIL
     v_num_scarti    NUMBER := 0;
     PID             NUMBER;
-    NUM_GRUPPO_DEST VARCHAR2(10);   -- 779 x test  14 per produzione
+    NUM_GRUPPO_DEST VARCHAR2(10) := '14';   -- 779 x test  14 per produzione
     v_testo         VARCHAR2(4000);
     crlf CONSTANT VARCHAR2(2) := CHR(13) || CHR(10);
     n_num_righe   NUMBER;
@@ -2150,14 +2150,6 @@ group by scontrino_prog, cod_ean, tipo_riga, cod_pdv, dt_competenza
   BEGIN
     dbms_output.put_line('******');
     dbms_output.put_line('Begin '||v_unit);
-    
-     --selezionamo i destinatari assegnando il gruppo mailinglist al gruppo di destinazione utilizzato nel package
-      select distinct to_char(m.gruppo)
-        into NUM_GRUPPO_DEST
-        from ETL.MAILINGLIST_USERS m
-       where upper(trim(flusso)) like '%'||upper(v_unit)||'%'; --nel campo flusso possiamo concatenare v_unit diverse
-
-      DMS_COM.write_jlt(v_unit, 1, 'gruppo mailing list: '||NUM_GRUPPO_DEST);
 
     DMS_COM.write_jlt(v_unit, 1, 'update ANAG.DW_STATO');
 
@@ -3321,7 +3313,7 @@ group by scontrino_prog, cod_ean, tipo_riga, cod_pdv, dt_competenza
     --variabili per creazione ed invio MAIL
     v_num_scarti    NUMBER := 0;
     PID             NUMBER;
-    NUM_GRUPPO_DEST VARCHAR2(10) ;   -- 779 x test  14 per produzione 
+    NUM_GRUPPO_DEST VARCHAR2(10) := '14';   -- 779 x test  14 per produzione 
     v_testo         VARCHAR2(4000);
     crlf CONSTANT VARCHAR2(2) := CHR(13) || CHR(10);
     --------------
@@ -3335,14 +3327,7 @@ group by scontrino_prog, cod_ean, tipo_riga, cod_pdv, dt_competenza
     
     
   BEGIN
-     --selezionamo i destinatari assegnando il gruppo mailinglist al gruppo di destinazione utilizzato nel package
-      select distinct to_char(m.gruppo)
-        into NUM_GRUPPO_DEST
-        from ETL.MAILINGLIST_USERS m
-       where upper(trim(flusso)) like '%'||upper(v_unit)||'%'; --nel campo flusso possiamo concatenare v_unit diverse
 
-      DMS_COM.write_jlt(v_unit, 1, 'gruppo mailing list: '||NUM_GRUPPO_DEST);
-      
     r_env := DWH_PROC.All_Env;
     select sysdate into v_sysdate from dual;
 
@@ -3682,7 +3667,7 @@ group by scontrino_prog, cod_ean, tipo_riga, cod_pdv, dt_competenza
     --Variabili Per Creazione Ed Invio Mail
     V_Num_Scarti    Number := 0;
     Pid             Number;
-    Num_Gruppo_Dest Varchar2(10);   -- 779 x test 14 per produzione
+    Num_Gruppo_Dest Varchar2(10) := '14';   -- 779 x test 14 per produzione
     V_Testo         Varchar2(4000);
     Crlf Constant Varchar2(2) := Chr(13) || Chr(10);
     --------------
@@ -3696,14 +3681,7 @@ group by scontrino_prog, cod_ean, tipo_riga, cod_pdv, dt_competenza
     v_nodata_stato    Exception; 
     
   Begin   
-     --selezionamo i destinatari assegnando il gruppo mailinglist al gruppo di destinazione utilizzato nel package
-      select distinct to_char(m.gruppo)
-        into NUM_GRUPPO_DEST
-        from ETL.MAILINGLIST_USERS m
-       where upper(trim(flusso)) like '%'||upper(v_unit)||'%'; --nel campo flusso possiamo concatenare v_unit diverse
-
-      DMS_COM.write_jlt(v_unit, 1, 'gruppo mailing list: '||NUM_GRUPPO_DEST);
-        
+  
   R_Env := Dwh_Proc.All_Env;
   Select Sysdate Into V_Sysdate From Dual;
   
@@ -4798,20 +4776,12 @@ Dms_Com.Write_Jlt(V_Unit, 1, 'Inserimento dati in dw_stato');
     n_num_righe                         NUMBER;
     v_count                             NUMBER;
     PID                                 NUMBER;
-    NUM_GRUPPO_DEST                     VARCHAR2(10);
+    NUM_GRUPPO_DEST                     VARCHAR2(10)   := '1011';
     v_testo                             VARCHAR2(4000) := '';
     vcName                              VARCHAR2(255);
     fHandle                             UTL_FILE.FILE_TYPE;
 
   BEGIN
-     --selezionamo i destinatari assegnando il gruppo mailinglist al gruppo di destinazione utilizzato nel package
-      select distinct to_char(m.gruppo)
-        into NUM_GRUPPO_DEST
-        from ETL.MAILINGLIST_USERS m
-       where upper(trim(flusso)) like '%'||upper(v_unit)||'%'; --nel campo flusso possiamo concatenare v_unit diverse
-
-      DMS_COM.write_jlt(v_unit, 1, 'gruppo mailing list: '||NUM_GRUPPO_DEST);
-
     DMS_COM.write_jlt(v_unit, 1, 'Inizio mail di riepilogo');
     --nome file da allegare
     vcName:='Riepilogo4STORE_'|| to_char(SYSDATE, 'yyyymmdd_hh24miss')||'.csv';
@@ -5055,7 +5025,7 @@ Dms_Com.Write_Jlt(V_Unit, 1, 'Inserimento dati in dw_stato');
     --variabili per creazione ed invio MAIL
     v_num_scarti            NUMBER := 0;
     PID                     NUMBER;
-    NUM_GRUPPO_DEST         VARCHAR2(10);   -- 779 x test  14 per produzione
+    NUM_GRUPPO_DEST         VARCHAR2(10) := '14';   -- 779 x test  14 per produzione
     v_testo                 VARCHAR2(4000);
     crlf          CONSTANT  VARCHAR2(2) := CHR(13) || CHR(10);
     v_cod_transazione       number :=0;
@@ -5084,13 +5054,6 @@ Dms_Com.Write_Jlt(V_Unit, 1, 'Inserimento dati in dw_stato');
     ;
     
   BEGIN
-     --selezionamo i destinatari assegnando il gruppo mailinglist al gruppo di destinazione utilizzato nel package
-      select distinct to_char(m.gruppo)
-        into NUM_GRUPPO_DEST
-        from ETL.MAILINGLIST_USERS m
-       where upper(trim(flusso)) like '%'||upper(v_unit)||'%'; --nel campo flusso possiamo concatenare v_unit diverse
-
-      DMS_COM.write_jlt(v_unit, 1, 'gruppo mailing list: '||NUM_GRUPPO_DEST);
     
     Execute Immediate 'truncate table PROC_TMP_EAN';
     Dms_Com.Write_Jlt(V_Unit, 1, 'truncate table PROC_TMP_EAN');
@@ -6608,19 +6571,11 @@ Dms_Com.Write_Jlt(V_Unit, 1, 'Inserimento dati in dw_stato');
     v_res                 VARCHAR2(2):='OK';
     PID                   NUMBER;
  
-    NUM_GRUPPO_DEST VARCHAR2(10);
+    NUM_GRUPPO_DEST VARCHAR2(10) := '14';
     v_testo         VARCHAR2(4000);   
     v_count_fp      INTEGER:=0; 
 
   BEGIN
-     --selezionamo i destinatari assegnando il gruppo mailinglist al gruppo di destinazione utilizzato nel package
-      select distinct to_char(m.gruppo)
-        into NUM_GRUPPO_DEST
-        from ETL.MAILINGLIST_USERS m
-       where upper(trim(flusso)) like '%'||upper(v_unit)||'%'; --nel campo flusso possiamo concatenare v_unit diverse
-
-      DMS_COM.write_jlt(v_unit, 1, 'gruppo mailing list: '||NUM_GRUPPO_DEST);
-
    --impostiamo un riferimento temporale univoco su cui basare tutte le sincronizzazioni.
    --select sysdate+1 into v_sysdate from dual;
    select sysdate into v_sysdate from dual;
@@ -7148,18 +7103,12 @@ Dms_Com.Write_Jlt(V_Unit, 1, 'Inserimento dati in dw_stato');
     v_day_start           DATE;
 
     --DA ATTIVARE IN PRODUZIONE
-    NUM_GRUPPO_DEST         VARCHAR2(10);
+    NUM_GRUPPO_DEST         VARCHAR2(10) := '100';
     PID                     NUMBER;
     v_testo                 VARCHAR2(2000);
 
 
   BEGIN
-     --selezionamo i destinatari assegnando il gruppo mailinglist al gruppo di destinazione utilizzato nel package
-      select distinct to_char(m.gruppo)
-        into NUM_GRUPPO_DEST
-        from ETL.MAILINGLIST_USERS m
-       where upper(trim(flusso)) like '%'||upper(v_unit)||'%'; --nel campo flusso possiamo concatenare v_unit diverse
-
     dbms_output.enable(40000000);
 
     select to_char(sysdate, 'DY')
@@ -8626,18 +8575,13 @@ end if;
     n_num_righe           NUMBER;
     --variabili per creazione ed invio MAIL
     PID             NUMBER;
-    NUM_GRUPPO_DEST VARCHAR2(10);  
+    NUM_GRUPPO_DEST VARCHAR2(10) := '102';  
     v_testo         VARCHAR2(4000);
     crlf   CONSTANT VARCHAR2(2) := CHR(13) || CHR(10);
     v_offset        NUMBER:=6;
 
 
   BEGIN
-     --selezionamo i destinatari assegnando il gruppo mailinglist al gruppo di destinazione utilizzato nel package
-      select distinct to_char(m.gruppo)
-        into NUM_GRUPPO_DEST
-        from ETL.MAILINGLIST_USERS m
-       where upper(trim(flusso)) like '%'||upper(v_unit)||'%'; --nel campo flusso possiamo concatenare v_unit diverse
   
        /*************************************************************************************/
        /***                      INVIO MAIL DI controllo                                  ***/
