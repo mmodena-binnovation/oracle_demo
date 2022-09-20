@@ -1,0 +1,2 @@
+#non consideriamo i files di backup creati da plsqldeveloper
+*.~pck
